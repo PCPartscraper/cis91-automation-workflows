@@ -1,1 +1,124 @@
 
+{
+  "name": "JavierH_Hello, world!",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        16,
+        0
+      ],
+      "id": "77c31ade-9e70-47bb-b699-0ba78f73c311",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "550806b5-342e-4e63-9abc-c40050988daa",
+              "name": "student_name",
+              "value": "javier",
+              "type": "string"
+            },
+            {
+              "id": "c133d5a5-dbae-4910-bed8-9ff2dba8299e",
+              "name": "course",
+              "value": "CIS-091 - Agentic Automation",
+              "type": "string"
+            },
+            {
+              "id": "aeb00b29-71ab-46f5-963c-30684b8e5f98",
+              "name": "message",
+              "value": "Hello from n8n",
+              "type": "string"
+            },
+            {
+              "id": "d324560f-daef-4777-be17-2e57d906930b",
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        256,
+        16
+      ],
+      "id": "932b3113-7363-4255-926b-d1721035682f",
+      "name": "Student info"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "15d6c598-268a-440a-b137-0feba172e6a0",
+              "name": "greeting",
+              "value": "={{ \"Welcome, \" + $json.student_name + \"! You are enrolled in \" + $json.course + \". Today is \" + $json.timestamp.substring(0, 10) + \".\" }}",
+              "type": "string"
+            },
+            {
+              "id": "05fa375b-74cb-45d6-9f8b-b9f57627b6c1",
+              "name": "word_count",
+              "value": "={{ $json.message.split(' ').lenght }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        496,
+        16
+      ],
+      "id": "ad6335ff-cf23-42e3-9764-8e5ba060c2bf",
+      "name": "Formal Greetings"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Student info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Student info": {
+      "main": [
+        [
+          {
+            "node": "Formal Greetings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "f26c5709-eb3a-42b3-824c-995ae864f814",
+  "meta": {
+    "instanceId": "74ee99bc740c6dac711ced63f616b978808d56ad1bdf9d964ab20472df081c38"
+  },
+  "nodeGroups": [],
+  "id": "rT6xpvH0S8WGJzAB",
+  "tags": []
+}
