@@ -1,0 +1,125 @@
+{
+  "name": "JavierH_DaliyJokeFetcher",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -32,
+        16
+      ],
+      "id": "9ea194f1-e7e2-46a1-99a1-d20a2de94abb",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://icanhazdadjoke.com/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        192,
+        0
+      ],
+      "id": "a2640c48-ec10-4d19-a602-497916d25bb9",
+      "name": "Get Joke"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "beb8e224-a6f8-4060-b15c-dc847ea4ad6f",
+              "name": "joke",
+              "value": "={{ $json.joke }}",
+              "type": "string"
+            },
+            {
+              "id": "4dda5a3d-2d8a-40cc-b030-01967742ab7b",
+              "name": "joke_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "c5f72257-8be0-4616-a3ec-40e548a6c301",
+              "name": "fetched_at",
+              "value": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}",
+              "type": "string"
+            },
+            {
+              "id": "47fe8c7e-3afb-48b5-a456-c094505f3c7e",
+              "name": "status",
+              "value": "={{ $json.status === 200 ? 'Success' : 'Error' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        400,
+        0
+      ],
+      "id": "32314a12-d804-44b6-96ac-9469962177c1",
+      "name": "Formal Output"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Joke",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Joke": {
+      "main": [
+        [
+          {
+            "node": "Formal Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "9516adde-3d81-4d73-8fa0-2f800ddcf7da",
+  "meta": {
+    "instanceId": "74ee99bc740c6dac711ced63f616b978808d56ad1bdf9d964ab20472df081c38"
+  },
+  "nodeGroups": [],
+  "id": "rE9NkHHy5ZLioMwt",
+  "tags": []
+}
