@@ -1,0 +1,230 @@
+{
+  "name": "API Explorer - GET Requests",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "66fa57b5-aa82-44bc-9b3f-8dca95a39def",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://wttr.in/El-Centro?format=j1",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "51932f66-1079-4e87-81a2-3f1079229563",
+      "name": "Weather Data"
+    },
+    {
+      "parameters": {
+        "url": "https://randomuser.me/api/",
+        "options": {
+          "response": {
+            "response": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        224,
+        176
+      ],
+      "id": "fcbb04bc-ee5e-41a0-bb58-fc6f433ef76a",
+      "name": "Random User Profile"
+    },
+    {
+      "parameters": {
+        "url": "https://icanhazdadjoke.com/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        224,
+        -160
+      ],
+      "id": "23d39609-47f0-40c7-8636-a156ab220243",
+      "name": "Daliy Dad Joke"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "77154478-08e4-4fb3-abd6-e97fe61b2309",
+              "name": "joke",
+              "value": "={{ $json.joke }}",
+              "type": "string"
+            },
+            {
+              "id": "e3a45401-0f03-48a5-a8a2-ffaaaf9a27c7",
+              "name": "joke_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        480,
+        -160
+      ],
+      "id": "10136fff-1872-42e3-9b24-afd0d6a3db6c",
+      "name": "NodeExtract_DadJoke"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "77154478-08e4-4fb3-abd6-e97fe61b2309",
+              "name": "weather",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        480,
+        0
+      ],
+      "id": "7900c704-b415-4ef8-9471-5603a2377f72",
+      "name": "NodeExtract_WeatherInfo"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "77154478-08e4-4fb3-abd6-e97fe61b2309",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        480,
+        176
+      ],
+      "id": "196180b7-c6fb-4ede-86a9-694c52b9586c",
+      "name": "NodeExtract_RandomUser"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Random User Profile",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Weather Data",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Daliy Dad Joke",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Random User Profile": {
+      "main": [
+        [
+          {
+            "node": "NodeExtract_RandomUser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daliy Dad Joke": {
+      "main": [
+        [
+          {
+            "node": "NodeExtract_DadJoke",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Weather Data": {
+      "main": [
+        [
+          {
+            "node": "NodeExtract_WeatherInfo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c76189b1-ae1b-4dc2-a930-0d06e0d5196c",
+  "meta": {
+    "instanceId": "74ee99bc740c6dac711ced63f616b978808d56ad1bdf9d964ab20472df081c38"
+  },
+  "nodeGroups": [],
+  "id": "v6i0K9XBWKZMYemO",
+  "tags": []
+}
